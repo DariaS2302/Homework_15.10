@@ -1,17 +1,17 @@
 package tests;
 
 
-import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import pages.DemoqaFormPage;
 
 import static io.qameta.allure.Allure.step;
 
+@Tag("fullFormTest")
+@DisplayName("Проверка полного заполнения формы")
 
 public class DemoqaFormTest extends TestBase {
 
-    private final DemoqaFormPage demoqaFormPage = new DemoqaFormPage();
+    DemoqaFormPage demoqaFormPage = new DemoqaFormPage();
 
     String firstName = "Daria",
             lastName = "Sarycheva",
@@ -29,14 +29,12 @@ public class DemoqaFormTest extends TestBase {
             city = "Del";
 
     @Test
-    @Tag("fullFormTest")
-    @DisplayName("Проверка полного заполнения формы")
     void fullFormTest() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
+       // SelenideLogger.addListener("allure", new AllureSelenide());
 
         step("Открыть форму", () -> {
             demoqaFormPage.openPage()
-                    .removeBanner();
+                   .removeBanner();
         });
 
         step("Заполнение firstName", () ->
