@@ -30,12 +30,7 @@ public class DemoqaFormTest extends TestBase {
 
     @Test
     void fullFormTest() {
-       // SelenideLogger.addListener("allure", new AllureSelenide());
-
-        step("Открыть форму", () -> {
-            demoqaFormPage.openPage()
-                   .removeBanner();
-        });
+     //  SelenideLogger.addListener("allure", new AllureSelenide());
 
         step("Заполнение firstName", () ->
                 demoqaFormPage.setFirstName(firstName));

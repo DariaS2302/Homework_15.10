@@ -6,24 +6,30 @@ import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import pages.DemoqaFormPage;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static io.qameta.allure.Allure.step;
 
 
 public class TestBase {
+    private final DemoqaFormPage demoqaFormPage = new DemoqaFormPage();
 
     @BeforeAll
     static void beforeAll() {
+        final String browserNameAndVersion = System.getProperty("browserNameAndVersion");
+        final String[] browserNameAndVersionArray = browserNameAndVersion.split(":");
+        Configuration.browserSize = System.getProperty("browserSize");
         Configuration.baseUrl = "https://demoqa.com";
+        Configuration.browser = browserNameAndVersionArray[0];
+        Configuration.browserVersion = browserNameAndVersionArray[1];
         Configuration.pageLoadStrategy = "eager";
         Configuration.remote = System.getProperty("remoteURL");
-        Configuration.browserSize = System.getProperty("browserSize");
-        Configuration.browser = System.getProperty("browser");
-        Configuration.browserVersion = System.getProperty("browserVersion");
-
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -36,10 +42,21 @@ public class TestBase {
 
     }
 
+    @BeforeEach
+    void openPage(){
+        step("Открываем форму", () -> {
+            demoqaFormPage.openPage();
+        });
+
+        step("Удаляем баннеры", () -> {
+            demoqaFormPage.removeBanner();
+        });
+    }
+
     @AfterEach
     void addAttachments() {
         Attach.screenshotAs("Screenshot");
-        if (!Configuration.browser.equals("opera")) {
+        if (!Objects.equals(Configuration.browser, "firefox")) {
             Attach.pageSource();
             Attach.browserConsoleLogs();
         }
