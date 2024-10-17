@@ -22,12 +22,9 @@ public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        final String browserNameAndVersion = System.getProperty("browserNameAndVersion");
-        final String[] browserNameAndVersionArray = browserNameAndVersion.split(":");
+        Configuration.browser = System.getProperty("browserNameAndVersion", "chrome");
         Configuration.browserSize = System.getProperty("browserSize");
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browser = browserNameAndVersionArray[0];
-        Configuration.browserVersion = browserNameAndVersionArray[1];
         Configuration.pageLoadStrategy = "eager";
         Configuration.remote = System.getProperty("remoteURL");
 
@@ -43,7 +40,7 @@ public class TestBase {
     }
 
     @BeforeEach
-    void openPage(){
+    void openPage() {
         step("Открываем форму", () -> {
             demoqaFormPage.openPage();
         });
