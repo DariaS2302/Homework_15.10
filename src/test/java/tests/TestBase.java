@@ -22,7 +22,7 @@ public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.browser = System.getProperty("browserNameAndVersion", "chrome:121.0");
+        Configuration.browser = System.getProperty("browserNameAndVersion", "chrome");
         Configuration.browserSize = System.getProperty("browserSize");
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
